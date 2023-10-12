@@ -36,15 +36,15 @@ public class Village {
 		}
 		
 		private Etal[] trouverEtals(String produit) {
-			Etal[] etals_produit = new Etal[etals.length - 1];
-			int i_produit = 0;
+			Etal[] etalsProduit = new Etal[etals.length - 1];
+			int iProduit = 0;
 			for (int i = 0; i < etals.length; i++) {
-				if (etals[i].contientProduit(produit) == true) {
-					etals_produit[i_produit] = etals[i];
-					i_produit++;
+				if (etals[i].contientProduit(produit)) {
+					etalsProduit[iProduit] = etals[i];
+					iProduit++;
 				}
 			}
-			return etals_produit;
+			return etalsProduit;
 		}
 		
 		private Etal trouverVendeur(Gaulois gaulois) {
@@ -113,4 +113,52 @@ public class Village {
 		}
 		return chaine.toString();
 	}
+	
+	public String installerVendeur(Gaulois vendeur, String produit, int nbProduit) {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append(vendeur.getNom() + " cherche un endroit pour vendre " + nbProduit + " "  + produit + " .\n");
+		int etalLibre = leBonMarche.trouverEtalLibre();
+		leBonMarche.utiliserEtal(etalLibre, vendeur, produit, nbProduit);
+		chaine.append("Le vendeur " + vendeur.getNom() + " vend des fleurs a l'étal n°" + (etalLibre+1) + ".");
+		return chaine.toString();
+	}
+	public String rechercherVendeursProduit(String produit) {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Les vendeurs qui proposent des " + produit + " sont :\n");
+		Etal[] etalsProduit = leBonMarche.trouverEtals(produit);
+		for (int i = 0; etalsProduit[i].isEtalOccupe(); i++) {
+			chaine.append("- " + etalsProduit[i].getVendeur() + "\n");
+		}
+		return chaine.toString();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
